@@ -1,4 +1,4 @@
-﻿//using BLL;
+﻿using BLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ namespace WebAPI_Auction
     {
         public static void Register(HttpConfiguration config)
         {
+            DBAutoMapper.Initialize();
             // Web API configuration and services
 
             var cors = new EnableCorsAttribute("*", "*", "*");

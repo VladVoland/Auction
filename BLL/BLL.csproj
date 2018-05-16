@@ -47,6 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBAutoMapper.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Lot.cs" />
+    <Compile Include="Entities\Subcategory.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="ICategory_Operations.cs" />
+    <Compile Include="ILot_Operations.cs" />
+    <Compile Include="ISubcategory_Operations.cs" />
+    <Compile Include="IUser_Operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
