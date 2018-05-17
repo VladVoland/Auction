@@ -47,16 +47,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBAutoMapper.cs" />
-    <Compile Include="Entities\Category.cs" />
-    <Compile Include="Entities\Lot.cs" />
-    <Compile Include="Entities\Subcategory.cs" />
-    <Compile Include="Entities\User.cs" />
     <Compile Include="ICategory_Operations.cs" />
+    <Compile Include="Entities\Category.cs" />
     <Compile Include="ILot_Operations.cs" />
     <Compile Include="ISubcategory_Operations.cs" />
     <Compile Include="IUser_Operations.cs" />
+    <Compile Include="Operations\Category_Operations.cs" />
+    <Compile Include="DBAutoMapper.cs" />
+    <Compile Include="Entities\Lot.cs" />
+    <Compile Include="Operations\Lot_Operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Entities\Subcategory.cs" />
+    <Compile Include="Operations\Subcategory_Operations.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Operations\User_Operations.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

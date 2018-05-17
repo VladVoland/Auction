@@ -14,15 +14,15 @@ namespace NinjectConfiguration
         public override void Load()
         {
             Bind<DAL.IUnitOfWork>().To<DAL.UnitOfWork>();
-            /*Bind<BLL.ICategory_Operations>().To<BLL.Category_Operations>();
+            //Bind<BLL.ICategory_Operations>().To<BLL.Category_Operations>();
             Bind<BLL.ISubcategory_Operations>().To<BLL.Subcategory_Operations>();
             Bind<BLL.ILot_Operations>().To<BLL.Lot_Operations>();
             Bind<BLL.IUser_Operations>().To<BLL.User_Operations>();
             Bind<DAL.UnitOfWork>().ToSelf();
-            Bind<Category_Operations>().ToSelf();
+            //Bind<Category_Operations>().ToSelf();
             Bind<Subcategory_Operations>().ToSelf();
             Bind<Lot_Operations>().ToSelf();
-            Bind<User_Operations>().ToSelf();*/
+            Bind<User_Operations>().ToSelf();
         }
     }
 }
