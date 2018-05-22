@@ -1,0 +1,87 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Online auction</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navb">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#!lotsView">Show all lots</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!signIn">Sign-in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!lotCreate" ng-hide="!logged">Create new lot</a>
+            </li>
+            <li class="nav-item">
+                <div class="nav-link" ng-hide="!logged" ng-click="logout()">Log out</div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-hide="!manager" href="#!manager">Manager menu</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ng-hide="!admin" href="#!admin">Admin menu</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container my-5">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="mx-2 my-2 btn btn-secondary"><a data-toggle="tab" data-target="#Unconfirmed" role="tab">Unconfirmed</a></li>
+        <li class="mx-2 my-2 btn btn-secondary"><a data-toggle="tab" data-target="#Ended" role="tab">Ended</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" id="Unconfirmed" role="tabpanel">
+            <table class="w3-table w3-bordered w3-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Bet</th>
+                    <th>Category</th>
+                    <th>Subcategory</th>
+                    <th>Duration</th>
+                    <th>Specification</th>
+                    <th>Confirm</th>
+                    <th>Delete</th>
+                </tr>
+                <tr ng-repeat="lot in unconfirmedlots">
+                    <td><p class="mt-2">{{ lot.Name }}</p></td>
+                    <td><p class="mt-2">{{ lot.Bet }}</p></td>
+                    <td><p class="mt-2">{{ lot.Category }}</p></td>
+                    <td><p class="mt-2">{{ lot.Subcategory }}</p></td>
+                    <td><p class="mt-2">{{ lot.Duration }}</p></td>
+                    <td><button class="w3-btn w3-ripple" ng-click="showSpecification(lot.Specification)">&#9998; Specification</button></td>
+                    <td><button class="w3-btn w3-ripple" ng-click="confirmLot(lot.LotId)">&#9998; Confirm</button></td>
+                    <td><button class="w3-btn w3-ripple" ng-click="deleteLot(lot.LotId)">&#9998; Delete</button></td>
+                </tr>
+            </table>
+            <br>
+            <form>
+                <h3>Specification:</h3>
+                <input class="w3-input w3-border disabled" type="text" ng-model="specification" placeholder="specification">
+            </form>
+        </div>
+        <div class="tab-pane" id="Ended" role="tabpanel">
+            <table class="w3-table w3-bordered w3-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Bet</th>
+                    <th>Winner</th>
+                    <th>End date</th>
+                    <th>Delete</th>
+                </tr>
+                <tr ng-repeat="lot in endedlots">
+                    <td><p class="mt-2">{{ lot.Name }}</p></td>
+                    <td><p class="mt-2">{{ lot.Bet }}</p></td>
+                    <td><p class="mt-2">{{ lot.Winner }}</p></td>
+                    <td><p class="mt-2">{{ lot.EndDate }}</p></td>
+                    <td><button class="w3-btn w3-ripple" ng-click="deleteLot(lot.LotId)">&#9998; Delete</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
