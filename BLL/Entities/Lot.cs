@@ -19,6 +19,7 @@ namespace BLL
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Owner { get; set; }
+        public string OwnerInfo { get; set; }
         public string Winner { get; set; }
     }
 }

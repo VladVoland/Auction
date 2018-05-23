@@ -129,7 +129,7 @@ namespace BLL
         public bool ChangeBet(int bet, int winnerId, int LotId)
         {
             DB_Lot lot = uow.Lots.FindById(LotId);
-            if (lot.Bet + lot.Step < bet)
+            if (lot.Bet + lot.Step <= bet)
             {
                 DB_User winner = uow.Users.FindById(winnerId);
                 string winnerInfo = winner.Name + " " + winner.Surname + "; Phone number: " + winner.PhoneNumber;
