@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BLL
 {
-    public class Lot
+    public class LotModel
     {
-        public Lot() { }
+        public LotModel() { }
         public int LotId { get; set; }
         public string Name { get; set; }
         public string Specification { get; set; }

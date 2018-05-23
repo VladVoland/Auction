@@ -53,7 +53,7 @@
     <Compile Include="ISubcategory_Operations.cs" />
     <Compile Include="IUser_Operations.cs" />
     <Compile Include="Operations\Category_Operations.cs" />
-    <Compile Include="DBAutoMapper.cs" />
+    <Compile Include="BLL_AutoMapper.cs" />
     <Compile Include="Entities\Lot.cs" />
     <Compile Include="Operations\Lot_Operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using BLL;
 using Ninject;
 using NinjectConfiguration;
@@ -21,15 +22,21 @@ namespace OnlineAuction.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Subcategory> GetSubcategory()
+        public IEnumerable<SubcategoryModel> GetSubcategory()
         {
-            return SOperations.GetSubcategories();
+            IEnumerable<Subcategory> tempSubcategories = SOperations.GetSubcategories();
+            IEnumerable<SubcategoryModel> subcategories;
+            subcategories = Mapper.Map<IEnumerable<Subcategory>, IEnumerable<SubcategoryModel>>(tempSubcategories);
+            return subcategories;
         }
         [HttpGet]
         [Route("api/subcategory/get/{categoryName}")]
-        public IEnumerable<Subcategory> GetSubcategoryByCateg(string categoryName)
+        public IEnumerable<SubcategoryModel> GetSubcategoryByCateg(string categoryName)
         {
-            return SOperations.GetSubcategoriesByCateg(categoryName);
+            IEnumerable<Subcategory> tempSubcategories = SOperations.GetSubcategoriesByCateg(categoryName);
+            IEnumerable<SubcategoryModel> subcategories;
+            subcategories = Mapper.Map<IEnumerable<Subcategory>, IEnumerable<SubcategoryModel>>(tempSubcategories);
+            return subcategories;
         }
 
         [HttpPost]

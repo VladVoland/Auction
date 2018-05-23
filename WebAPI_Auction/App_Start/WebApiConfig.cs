@@ -12,7 +12,7 @@ namespace WebAPI_Auction
     {
         public static void Register(HttpConfiguration config)
         {
-            DBAutoMapper.Initialize();
+            AutoMapperConfig.Initialize();
             // Web API configuration and services
 
             var cors = new EnableCorsAttribute("*", "*", "*");

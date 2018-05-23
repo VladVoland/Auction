@@ -20,14 +20,8 @@ namespace BLL
         }
         public void SaveLot(Lot _lot)
         {
-            DB_Lot lot = new DB_Lot();
-            lot.Bet = _lot.Bet;
-            lot.Duration = _lot.Duration;
-            lot.Name = _lot.Name;
-            lot.Specification = _lot.Specification;
-            lot.Step = _lot.Step;
+            DB_Lot lot = Mapper.Map<Lot, DB_Lot>(_lot);
             lot.Winner = "No winner";
-
             double per = lot.Bet / 10;
             if (per > lot.Step)
                 lot.Step = (int)per;

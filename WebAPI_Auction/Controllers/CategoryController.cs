@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using BLL;
 using Ninject;
 using NinjectConfiguration;
@@ -22,9 +23,11 @@ namespace OnlineAuction.Controllers
 
         [HttpGet]
         [Route("api/category")]
-        public IEnumerable<Category> GetCategories()
+        public IEnumerable<CategoryModel> GetCategories()
         {
-            return COperations.GetCategories();
+            IEnumerable<Category> tempCategs = COperations.GetCategories();
+            IEnumerable<CategoryModel> categories = Mapper.Map<IEnumerable<Category>, IEnumerable<CategoryModel>>(tempCategs);
+            return categories;
         }
 
         [HttpPost]

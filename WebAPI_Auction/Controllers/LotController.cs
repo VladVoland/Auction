@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using BLL;
 using Ninject;
 using NinjectConfiguration;
@@ -22,46 +23,59 @@ namespace OnlineAuction.Controllers
 
         [HttpGet]
         [Route("api/lot/GetLotsBySearch")]
-        public IEnumerable<Lot> GetLotsBySearch(string category, string subcategory, string keyword)
+        public IEnumerable<LotModel> GetLotsBySearch(string category, string subcategory, string keyword)
         {
             if (category == null) category = "";
             if (subcategory == null) subcategory = "";
             if (keyword == null) keyword = "";
             if (!string.IsNullOrWhiteSpace(category) || !string.IsNullOrWhiteSpace(subcategory) || !string.IsNullOrWhiteSpace(keyword))
-                return LOperations.GetBySearch(category, subcategory, keyword);
-            return LOperations.GetСonfirmedLots();
+            {
+                IEnumerable<Lot> tempLots = LOperations.GetBySearch(category, subcategory, keyword);
+                IEnumerable<LotModel> lots = Mapper.Map<IEnumerable<Lot>, IEnumerable<LotModel>>(tempLots);
+                return lots;
+            }
+            IEnumerable<Lot> tempCLots = LOperations.GetСonfirmedLots();
+            IEnumerable<LotModel> clots = Mapper.Map<IEnumerable<Lot>, IEnumerable<LotModel>>(tempCLots);
+            return clots;
         }
 
         [HttpGet]
         [Route("api/lot/GetUnconfirmedLots")]
-        public IEnumerable<Lot> GetUnconfirmedLots()
+        public IEnumerable<LotModel> GetUnconfirmedLots()
         {
-            return LOperations.GetUnconfirmedLots();
+            IEnumerable<Lot> tempLots = LOperations.GetUnconfirmedLots();
+            IEnumerable<LotModel> lots = Mapper.Map<IEnumerable<Lot>, IEnumerable<LotModel>>(tempLots);
+            return lots;
         }
         [HttpGet]
         [Route("api/lot/GetConfirmedLots")]
-        public IEnumerable<Lot> GetConfirmedLots()
+        public IEnumerable<LotModel> GetConfirmedLots()
         {
-            return LOperations.GetСonfirmedLots();
+            IEnumerable<Lot> tempLots = LOperations.GetСonfirmedLots();
+            IEnumerable<LotModel> lots = Mapper.Map<IEnumerable<Lot>, IEnumerable<LotModel>>(tempLots);
+            return lots;
         }
         [HttpGet]
         [Route("api/lot/GetEndedLots")]
-        public IEnumerable<Lot> GetEndedLots()
+        public IEnumerable<LotModel> GetEndedLots()
         {
-            return LOperations.GetEndedLots();
+            IEnumerable<Lot> tempLots = LOperations.GetEndedLots();
+            IEnumerable<LotModel> lots = Mapper.Map<IEnumerable<Lot>, IEnumerable<LotModel>>(tempLots);
+            return lots;
         }
 
         [HttpPost]
         [Route("api/lot/newLot")]
-        public IHttpActionResult PostLot(Lot lot)
+        public IHttpActionResult PostLot(LotModel _lot)
         {
-            if (string.IsNullOrWhiteSpace(lot.Name) || string.IsNullOrWhiteSpace(lot.Specification)
-                || string.IsNullOrWhiteSpace(lot.Category) || lot.Bet == 0 || lot.Duration == 0)
+            if (string.IsNullOrWhiteSpace(_lot.Name) || string.IsNullOrWhiteSpace(_lot.Specification)
+                || string.IsNullOrWhiteSpace(_lot.Category) || _lot.Bet == 0 || _lot.Duration == 0)
             {
                 return BadRequest("Please, correct your inputs");
             }
             else
             {
+                Lot lot = Mapper.Map<LotModel, Lot>(_lot);
                 LOperations.SaveLot(lot);
                 return Ok();
             }
@@ -89,8 +103,6 @@ namespace OnlineAuction.Controllers
         [Route("api/lot/changeBet/{bet}/{winnerId}/{LotId}")]
         public IHttpActionResult ChangeBet(int bet, int winnerId, int LotId)
         {
-            /*int _bet;
-            bool isInt = Int32.TryParse("ляляля", out _bet);*/
             bool result = LOperations.ChangeBet(bet, winnerId, LotId);
             if (!result)
                 return BadRequest("Please, input correct bet");

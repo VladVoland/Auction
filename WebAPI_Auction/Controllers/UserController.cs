@@ -9,6 +9,7 @@ using BLL;
 using Newtonsoft.Json.Linq;
 using Ninject;
 using NinjectConfiguration;
+using AutoMapper;
 
 namespace OnlineAuction.Controllers
 {
@@ -30,34 +31,41 @@ namespace OnlineAuction.Controllers
                 return BadRequest("Please, enter login and password");
             else
             {
-                User userId = UOperations.CheckUser(login, password);
-                if (userId != null)
-                    return Ok(userId);
+                User bll_user = UOperations.CheckUser(login, password);
+                UserModel user = Mapper.Map<User, UserModel>(bll_user);
+                if (user != null)
+                    return Ok(user);
                 else return BadRequest("Please, check correctness of login and password");
             }
         }
 
         [HttpGet]
         [Route("api/user")]
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<UserModel> GetUsers()
         {
-            return UOperations.GetUsers();
+            IEnumerable<User> users = UOperations.GetUsers();
+            IEnumerable<UserModel> ui_users = Mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(users);
+            return ui_users;
         }
 
         [HttpPost]
         [Route("api/user/newUser")]
-        public IHttpActionResult PostUser(User user)
+        public IHttpActionResult PostUser(UserModel _user)
         {
-            if (string.IsNullOrWhiteSpace(user.Login) || string.IsNullOrWhiteSpace(user.Password)
-                || string.IsNullOrWhiteSpace(user.Name) || string.IsNullOrWhiteSpace(user.Surname)
-                || string.IsNullOrWhiteSpace(user.Patronymic) || user.PhoneNumber == 0 || string.IsNullOrWhiteSpace(user.Passport))
+            if (string.IsNullOrWhiteSpace(_user.Login) || string.IsNullOrWhiteSpace(_user.Password)
+                || string.IsNullOrWhiteSpace(_user.Name) || string.IsNullOrWhiteSpace(_user.Surname)
+                || string.IsNullOrWhiteSpace(_user.Patronymic) || _user.PhoneNumber == 0 
+                || string.IsNullOrWhiteSpace(_user.Passport))
             {
                 return BadRequest("Please, fill all fields");
             }
-            else if (UOperations.CheckUser(user.Login)) return BadRequest("This login already registered");
-            else if (UOperations.CheckUser(user.Name, user.Surname, user.Patronymic)) return BadRequest("Such person already registered");
+            else if (UOperations.CheckUser(_user.Login))
+                return BadRequest("This login already registered");
+            else if (UOperations.CheckUser(_user.Name, _user.Surname, _user.Patronymic))
+                return BadRequest("Such person already registered");
             else
             {
+                User user = Mapper.Map<UserModel, User>(_user);
                 UOperations.SaveUser(user);
                 return Ok();
             }
