@@ -19,6 +19,7 @@ app.controller('signIn', function ($scope, $http, $route) {
     $scope.check = function () {
         $scope.manager = isManager;
         $scope.admin = isAdmin;
+        if (tempUserLogin != "") $scope.logged = true;
 
         $http.get("http://localhost:58135/api/user/" + $scope.login + "/" + $scope.password).then(
             function (response) {
@@ -260,7 +261,6 @@ app.controller('lotsView', function ($scope, $http, $route) {
         $scope.specification = Specification;
         if (tempUserId == OwnerId) $scope.owner = true;
         else $scope.owner = false;
-        alert(tempUserId + " " + OwnerId + " " + $scope.owner);
         tempLotId = LotId;
     };
 

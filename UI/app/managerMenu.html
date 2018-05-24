@@ -70,6 +70,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Bet</th>
+                    <th>Owner</th>
                     <th>Winner</th>
                     <th>End date</th>
                     <th>Delete</th>
@@ -77,6 +78,7 @@
                 <tr ng-repeat="lot in endedlots">
                     <td><p class="mt-2">{{ lot.Name }}</p></td>
                     <td><p class="mt-2">{{ lot.Bet }}</p></td>
+                    <td><p class="mt-2">{{ lot.OwnerInfo }}</p></td>
                     <td><p class="mt-2">{{ lot.Winner }}</p></td>
                     <td><p class="mt-2">{{ lot.EndDate }}</p></td>
                     <td><button class="w3-btn w3-ripple" ng-click="deleteLot(lot.LotId)">&#9998; Delete</button></td>
