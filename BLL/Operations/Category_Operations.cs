@@ -11,6 +11,7 @@ namespace BLL
     public class Category_Operations : ICategory_Operations
     {
         IKernel ninjectKernel;
+
         public IUnitOfWork uow { get; set; }
         public Category_Operations()
         {
@@ -18,6 +19,12 @@ namespace BLL
             ninjectKernel.Bind<IUnitOfWork>().To<UnitOfWork>();
             this.uow = ninjectKernel.Get<IUnitOfWork>();
         }
+
+        public Category_Operations(IUnitOfWork uow)
+        {
+            this.uow = uow;
+        }
+
         public List<Category> GetCategories()
         {
             List<Category> categories = new List<Category>();

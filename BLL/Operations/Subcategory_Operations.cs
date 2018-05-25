@@ -12,6 +12,10 @@ namespace BLL
     {
         IKernel ninjectKernel;
         public IUnitOfWork uow { get; set; }
+        public Subcategory_Operations(IUnitOfWork uow)
+        {
+            this.uow = uow;
+        }
         public Subcategory_Operations()
         {
             ninjectKernel = new StandardKernel();

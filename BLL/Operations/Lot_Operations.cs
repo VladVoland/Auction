@@ -12,6 +12,10 @@ namespace BLL
     {
         IKernel ninjectKernel;
         public IUnitOfWork uow { get; set; }
+        public Lot_Operations(IUnitOfWork uow)
+        {
+            this.uow = uow;
+        }
         public Lot_Operations()
         {
             ninjectKernel = new StandardKernel();
@@ -56,8 +60,10 @@ namespace BLL
         {
             DB_Lot lot = uow.Lots.FindById(LotId);
             if (lot != null)
+            {
                 uow.Lots.Remove(lot);
-            uow.Save();
+                uow.Save();
+            }
         }
 
         public List<Lot> GetUnconfirmedLots()
@@ -69,7 +75,6 @@ namespace BLL
                 if (lot.StartDate == new DateTime())
                 {
                     Lot tempL = Mapper.Map<DB_Lot, Lot>(lot);
-                    tempL.Owner = lot.Owner.UserId;
                     lots.Add(tempL);
                 }
             }
@@ -93,7 +98,6 @@ namespace BLL
                 if (lot.StartDate != new DateTime(0001, 1, 1, 0, 0, 0) && lot.EndDate > DateTime.Now)
                 {
                     Lot tempL = Mapper.Map<DB_Lot, Lot>(lot);
-                    tempL.Owner = lot.Owner.UserId;
                     lots.Add(tempL);
                 }
             }
@@ -119,7 +123,6 @@ namespace BLL
                 if (lot.EndDate <= DateTime.Now)
                 {
                     Lot tempL = Mapper.Map<DB_Lot, Lot>(lot);
-                    tempL.Owner = lot.Owner.UserId;
                     lots.Add(tempL);
                 }
             }
