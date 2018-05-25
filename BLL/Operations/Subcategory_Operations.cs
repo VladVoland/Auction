@@ -30,7 +30,7 @@ namespace BLL
             return subcategories;
         }
 
-        public IEnumerable<Subcategory> GetSubcategoriesByCateg(string categoryName)
+        public List<Subcategory> GetSubcategoriesByCateg(string categoryName)
         {
             List<Subcategory> subcategories = new List<Subcategory>();
             IEnumerable<DB_Subcategory> dbsubcategories = uow.Subcategories.GetWithInclude(s => s.Category);

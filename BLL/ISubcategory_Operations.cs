@@ -11,7 +11,7 @@ namespace BLL
     {
         IUnitOfWork uow { get; set; }
         List<Subcategory> GetSubcategories();
-        IEnumerable<Subcategory> GetSubcategoriesByCateg(string categoryName);
+        List<Subcategory> GetSubcategoriesByCateg(string categoryName);
         void SaveSubcategory(string SubcategoryName, string CategoryName);
         void deleteSubcategory(int SubcategoryId);
     }
