@@ -56,7 +56,7 @@
                 <td><button class="w3-btn w3-ripple" ng-click="showSpecification(lot.Name, lot.Specification, lot.Owner, lot.LotId)">&#9998; Specification</button></td>
                 <td>
                     <div class="row">
-                        <input class="w3-input w3-border" ng-disabled="!logged" type="text" ng-model="newBet" placeholder="your bet" />
+                        <input class="form-control mr-2" ng-disabled="!logged" type="text" ng-model="newBet" placeholder="your bet" />
                         <button class="w3-btn w3-ripple" ng-disabled="!logged" ng-click="changeBet(lot.LotId, newBet)">&#9998; Set</button>
                     </div>
                 </td>
