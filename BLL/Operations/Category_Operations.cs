@@ -5,6 +5,7 @@ using AutoMapper;
 using DAL;
 using DAL.Entities;
 using Ninject;
+using NinjectConfiguration;
 
 namespace BLL
 {
@@ -15,8 +16,7 @@ namespace BLL
         public IUnitOfWork uow { get; set; }
         public Category_Operations()
         {
-            ninjectKernel = new StandardKernel();
-            ninjectKernel.Bind<IUnitOfWork>().To<UnitOfWork>();
+            ninjectKernel = new StandardKernel(new BLL_NinjectConfig());
             this.uow = ninjectKernel.Get<IUnitOfWork>();
         }
 

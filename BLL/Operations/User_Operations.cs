@@ -5,6 +5,7 @@ using AutoMapper;
 using DAL;
 using DAL.Entities;
 using Ninject;
+using NinjectConfiguration;
 
 namespace BLL
 {
@@ -18,8 +19,7 @@ namespace BLL
         }
         public User_Operations()
         {
-            ninjectKernel = new StandardKernel();
-            ninjectKernel.Bind<IUnitOfWork>().To<UnitOfWork>();
+            ninjectKernel = new StandardKernel(new BLL_NinjectConfig());
             this.uow = ninjectKernel.Get<IUnitOfWork>();
         }
         public bool CheckUser(string login)

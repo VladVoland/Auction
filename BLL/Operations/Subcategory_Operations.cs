@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
 using Ninject;
+using NinjectConfiguration;
 
 namespace BLL
 {
@@ -18,8 +19,7 @@ namespace BLL
         }
         public Subcategory_Operations()
         {
-            ninjectKernel = new StandardKernel();
-            ninjectKernel.Bind<IUnitOfWork>().To<UnitOfWork>();
+            ninjectKernel = new StandardKernel(new BLL_NinjectConfig());
             this.uow = ninjectKernel.Get<IUnitOfWork>();
         }
         public List<Subcategory> GetSubcategories()
