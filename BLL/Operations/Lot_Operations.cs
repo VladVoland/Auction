@@ -101,6 +101,15 @@ namespace BLL
                     lots.Add(tempL);
                 }
             }
+            foreach (Lot lot in lots)
+            {
+                if (lot.SubcategoryId > 0)
+                {
+                    DB_Subcategory dbsubc = uow.Subcategories.FindById(lot.SubcategoryId);
+                    lot.Subcategory = dbsubc.Name;
+                }
+                else lot.Subcategory = "";
+            }
             return lots;
         }
 

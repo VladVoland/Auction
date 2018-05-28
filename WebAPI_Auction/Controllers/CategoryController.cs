@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using AutoMapper;
 using BLL;
@@ -34,8 +35,11 @@ namespace OnlineAuction.Controllers
         [Route("api/saveCategory/{name}")]
         public IHttpActionResult PostCategory(string name)
         {
+            string patt = @"^[\d|\D]{1,50}$";
             if (string.IsNullOrWhiteSpace(name))
                 return BadRequest("Please, enter category name");
+            else if (!Regex.IsMatch(name, patt))
+                return BadRequest("Category name is too longs");
             else
             {
                 COperations.SaveCategory(name);

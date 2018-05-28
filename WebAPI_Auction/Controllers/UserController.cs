@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using Ninject;
 using NinjectConfiguration;
 using AutoMapper;
+using System.Text.RegularExpressions;
 
 namespace OnlineAuction.Controllers
 {
@@ -52,13 +53,29 @@ namespace OnlineAuction.Controllers
         [Route("api/user/newUser")]
         public IHttpActionResult PostUser(UserModel _user)
         {
+            string patt = @"^[\d|\D]{1,30}$";
+
             if (string.IsNullOrWhiteSpace(_user.Login) || string.IsNullOrWhiteSpace(_user.Password)
                 || string.IsNullOrWhiteSpace(_user.Name) || string.IsNullOrWhiteSpace(_user.Surname)
-                || string.IsNullOrWhiteSpace(_user.Patronymic) || _user.PhoneNumber == 0 
+                || string.IsNullOrWhiteSpace(_user.Patronymic) || _user.PhoneNumber == 0
                 || string.IsNullOrWhiteSpace(_user.Passport))
             {
                 return BadRequest("Please, fill all fields");
             }
+            else if (!Regex.IsMatch(_user.Name, patt))
+                return BadRequest("Name is too longs");
+            else if (!Regex.IsMatch(_user.Login, patt))
+                return BadRequest("Login is too longs");
+            else if (!Regex.IsMatch(_user.Password, patt))
+                return BadRequest("Password is too longs");
+            else if (!Regex.IsMatch(_user.Surname, patt))
+                return BadRequest("Surname is too longs");
+            else if (!Regex.IsMatch(_user.Patronymic, patt))
+                return BadRequest("Patronymic is too longs");
+            else if(!Regex.IsMatch(_user.PhoneNumber + "", @"^[0-9]{9}$"))
+                return BadRequest("Incorrectly entered phone number!");
+            else if (!Regex.IsMatch(_user.Passport, @"^[А-ЯA-ZЁЇІЄҐZ]{2}[0-9]{6}$"))
+                return BadRequest("Incorrectly entered passport!");
             else if (UOperations.CheckUser(_user.Login))
                 return BadRequest("This login already registered");
             else if (UOperations.CheckUser(_user.Name, _user.Surname, _user.Patronymic))

@@ -44,14 +44,13 @@ namespace BLL
 
         public void SaveSubcategory(string SubcategoryName, string CategoryName)
         {
-            DB_Category categ = null;
+            int categ = 0;
             IEnumerable<DB_Category> categories = uow.Categories.Get();
             foreach (DB_Category c in categories)
             {
-                if (c.Name == CategoryName) categ = c;
+                if (c.Name == CategoryName) categ = c.CategoryId;
             }
-
-            DB_Subcategory subcateg = new DB_Subcategory { Name = SubcategoryName, Category = categ };
+            DB_Subcategory subcateg = new DB_Subcategory { Name = SubcategoryName, Category = uow.Categories.FindById(categ)};
             uow.Subcategories.Create(subcateg);
             uow.Save();
         }

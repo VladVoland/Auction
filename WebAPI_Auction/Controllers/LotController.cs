@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using AutoMapper;
 using BLL;
@@ -73,6 +74,10 @@ namespace OnlineAuction.Controllers
             {
                 return BadRequest("Please, correct your inputs");
             }
+            else if (!Regex.IsMatch(_lot.Name, @"^[\d|\D]{1,50}$"))
+                return BadRequest("Name is too longs");
+            else if (!Regex.IsMatch(_lot.Specification, @"^[\d|\D]{1,1000}$"))
+                return BadRequest("Specification is too longs");
             else
             {
                 Lot lot = Mapper.Map<LotModel, Lot>(_lot);
@@ -92,22 +97,36 @@ namespace OnlineAuction.Controllers
         [Route("api/lot/change/{Name}/{Specification}/{lotId}")]
         public IHttpActionResult Change(string Name, string Specification, int lotId)
         {
-            bool result = LOperations.Change(Name, Specification, lotId);
-            if (!result)
-                return BadRequest("Please, input correct information");
+            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Specification))
+                return BadRequest("Please, correct your inputs");
+            else if (!Regex.IsMatch(Name, @"^[\d|\D]{1,50}$)"))
+                return BadRequest("Name is too longs");
+            else if (!Regex.IsMatch(Specification, @"^[\d|\D]{1,1000}$)"))
+                return BadRequest("Specification is too longs");
             else
-                return Ok();
+            {
+                bool result = LOperations.Change(Name, Specification, lotId);
+                if (!result)
+                    return BadRequest("Please, input correct information");
+                else
+                    return Ok();
+            }
         }
 
         [HttpPut]
         [Route("api/lot/changeBet/{bet}/{winnerId}/{LotId}")]
         public IHttpActionResult ChangeBet(int bet, int winnerId, int LotId)
         {
-            bool result = LOperations.ChangeBet(bet, winnerId, LotId);
-            if (!result)
-                return BadRequest("Please, input correct bet");
+            if (!Regex.IsMatch(bet + "", @"^[\d|\D]{1,9}$"))
+                return BadRequest("Specification is too longs");
             else
-                return Ok();
+            {
+                bool result = LOperations.ChangeBet(bet, winnerId, LotId);
+                if (!result)
+                    return BadRequest("Please, input correct bet");
+                else
+                    return Ok();
+            }
         }
 
         [HttpDelete]
